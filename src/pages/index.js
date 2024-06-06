@@ -11,7 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Grid } from '@mui/material';
-//import books from '../data/books.json'; //remove this
+//import books from '../data/books.json'; //removed
 
 
 
