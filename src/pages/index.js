@@ -1,5 +1,5 @@
 
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import ReactDOM from "react-dom/client";
 import app from "./_app";
 import { createTheme, Paper, Box, Button, Container, Typography, IconButton, TextField } from "@mui/material";
@@ -11,7 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import LanguageIcon from '@mui/icons-material/Language';
 import { Grid } from '@mui/material';
-import books from '../data/books.json';
+//import books from '../data/books.json'; //remove this
 
 
 
@@ -24,7 +24,7 @@ const openInNewTab = (url) => {
 
 
 export default function App(){
-
+  const [books, setBooks] = useState([]);
   const [favorites, setFavorites] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
   const [languageFilter, setLanguageFilter] = useState([]);
@@ -32,8 +32,20 @@ export default function App(){
   const [pageRangeFilter, setPageRangeFilter] = useState('');
   const [centuryFilter, setCenturyFilter] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
   const booksPerPage = 20;
+
+  
+
+  useEffect(() => {
+    async function fetchBooks() {
+      const response = await  fetch('/api/books');
+      const data = await response.json();
+      setBooks(data);
+    }
+
+    fetchBooks();
+  }, []);
+
 
   const toggleFavorite = (title) => {
     setFavorites(prevFavorites => ({
@@ -87,9 +99,7 @@ export default function App(){
           sx={{ 
             my: 4, 
             textAlign: "left", 
-            
             fontWeight: 'bold',
-        
             textShadow: '2px 2px 8px rgba(0,0,0,0.6)',
             fontFamily: 'Arial, sans-serif',
             letterSpacing: 1.5,
@@ -111,7 +121,6 @@ export default function App(){
             justifyContent: 'center',
             mr: 2,
             marginBottom: 0
-            
           }}
         >
           <Box sx={{ width: '100%', maxWidth: 600 }}>
